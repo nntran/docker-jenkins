@@ -1,4 +1,5 @@
-FROM jenkins/jenkins:2.184-jdk11
+# https://github.com/jenkinsci/docker
+FROM jenkins/jenkins:lts
 MAINTAINER ntran@ntdt.fr
 
 # As root user
@@ -18,3 +19,12 @@ RUN apt-get update \
 # run docker commands as jenkins user (sudo not required)
 RUN usermod -aG docker jenkins
 
+# Setting the number of executors (default 2 executors)
+COPY executors.groovy /usr/share/jenkins/ref/init.groovy.d/executors.groovy
+
+# Install plugins
+COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+
+# drop back to the regular jenkins user - good practice
+USER jenkins
