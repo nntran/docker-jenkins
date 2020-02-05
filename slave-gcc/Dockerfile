@@ -22,7 +22,7 @@ COPY ssh-slave-entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/ssh-slave-entrypoint.sh
 
 # on supprime d'abord les clefs existantes
-RUN rm /etc/ssh/ssh_host*
+RUN rm -rf /etc/ssh/ssh_host*
 
 # on re-génère les clefs
 # Surtout les clefs suivants
